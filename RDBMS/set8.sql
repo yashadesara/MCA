@@ -134,6 +134,27 @@ end;
 /
 
 
+-- 8. Write a trigger which will not allow to insert/update in current table if Date_of_arrival 
+-- is less than date_of_closure.
 
+create or replace trigger tricurr
+    before insert or update or delete on CURR
+    for each row
+declare
+    msg varchar2(100);
+begin   
+    msg:='';
+    if  :new.date_of_arrival < :new.date_of_closure then
+        if inserting then
+            msg:=' insert ';
+        elsif updating then
+            msg:=' update ';
+        else
+           msg:=' delete ';
+        end if;
+        raise_application_error(-20000,'you can not' ||msg|| 'when date of arrival is less than date of closure date');
+    end if;
+end;
+/
 
 

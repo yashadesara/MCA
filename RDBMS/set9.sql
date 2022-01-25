@@ -267,7 +267,27 @@ begin
 end;
 /
 
-
+-- 15. Write a trigger which do not allow insertion / updation / deletion of Enterance test 
+-- details on Sunday
+create or replace trigger triet
+    before insert or update or delete on ENTRANCE_TEST
+    for each row
+declare
+    msg varchar2(100);
+begin   
+    msg:='';
+    if  trim(to_char(sysdate,'DAY'))='MONDAY' then
+        if inserting then
+            msg:=' insert ';
+        elsif updating then
+            msg:=' update ';
+        else
+           msg:=' delete ';
+        end if;
+        raise_application_error(-20000,'you can not' ||msg|| 'on MONDAY');
+    end if;
+end;
+/
 
 
 

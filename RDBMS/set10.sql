@@ -95,6 +95,28 @@ rm.routeno=th.routeno
 group by catdesc;
 
 
+-- 6. Write a trigger which allow to insert or update the bus capacity only greater than zero 
+-- and less than 60.
+create or replace trigger triroute
+    before insert or update or delete on ROUTEMASTER
+    for each row
+declare
+    msg varchar2(100);
+begin   
+    msg:='';
+    if  :new.capacity < 0 or :new.capacity > 60 then
+        if inserting then
+            msg:=' insert ';
+        elsif updating then
+            msg:=' update ';
+        else
+           msg:=' delete ';
+        end if;
+        raise_application_error(-20000,'you can not' ||msg|| 'when date of arrival is less than date of closure date');
+    end if;
+end;
+/
+
 
 -- 7. Write a Procedure which will print tour details, a driver is going to take it. ( pass route_no as parameter)
 

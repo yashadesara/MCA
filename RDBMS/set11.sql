@@ -179,6 +179,28 @@ end;
 /
 
 
+-- 9. Write a trigger which do not allow to insert or update passenger record if age is greater 
+-- than 100.
+create or replace trigger tripassenger
+    before insert or update or delete on PASSENGER_DETAILS
+    for each row
+declare
+    msg varchar2(100);
+begin   
+    msg:='';
+    if  :new.age > 100 then
+        if inserting then
+            msg:=' insert ';
+        elsif updating then
+            msg:=' update ';
+        else
+           msg:=' delete ';
+        end if;
+        raise_application_error(-20000,'you can not' ||msg|| 'when date of arrival is less than date of closure date');
+    end if;
+end;
+/
+
 
 
 
