@@ -65,6 +65,7 @@ begin
     return f;
 end;
 /
+select f1() from dual;
 
 -- 6. Create a procedure to display month names of dates of ORDER table. The month
 -- names should be unique.

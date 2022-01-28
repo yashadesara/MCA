@@ -175,7 +175,7 @@ begin
     return (atime||' '||dtime);
 end;
 /
-
+select f1('9012DN') from dual;
 
 -- 9. Write a trigger which do not allow to insert or update passenger record if age is greater 
 -- than 100.

@@ -1,4 +1,4 @@
-create table Employee
+create table EEmployee
 (
     eid int PRIMARY KEY,
     fname VARCHAR(8),
@@ -6,10 +6,9 @@ create table Employee
     salary number(6)
 );
 
-
-insert into Employee values(1,'MR.SHAH','BHAI',10000);
-insert into Employee values(2,'MR.VIRANI''BHAIJAAN',20000);
-insert into Employee values(3,'MR.MEHTA','BRO',30000);
+insert into EEmployee values(1,'MR.SHAH','BHAI',10000);
+insert into EEmployee values(2,'MR.VIRA','BHAIJAAN',20000);
+insert into EEmployee values(3,'MR.MEHTA','BRO',30000);
 
 
 --Employee (eid, fname, lname, salary)
@@ -20,14 +19,13 @@ return number
 is
 	tot_sal number(8);	
 	cursor c1 is 
-	select eid,fname,lname,salary from tb_employee;	
+	select eid,fname,lname,salary from EEmployee;	
 begin	
 	tot_sal:=0;
 	 for r in c1 loop
 			tot_sal:=tot_sal+r.salary;			 
 	end loop;
 	return(tot_sal);
-	
 end;
 /
 
@@ -48,14 +46,14 @@ create or replace procedure total_paid_salary_of_emp(ch varchar2)
 is
 	tot_sal number(8);	
 	cursor c1 is 
-	select eid,fname,lname,salary from tb_employee where fname like ch||'%';	
+	select eid,fname,lname,salary from EEmployee where fname like ch||'%';	
 begin	
 	tot_sal:=0;
 	 for r in c1 loop
 			tot_sal:=tot_sal+r.salary;			 
 	end loop;
 	dbms_output.put_line('Total Salary : '||tot_sal );
-	
 end;
 /
-exec total_paid_salary_of_emp('c');
+
+exec total_paid_salary_of_emp('M');

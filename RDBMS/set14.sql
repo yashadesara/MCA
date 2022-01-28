@@ -105,7 +105,7 @@ end;
 declare
 	ans number(4);
 begin
-	ans:=display_item_count('green',10 ,600);
+	ans:=display_item_count('BLACK',10 ,600);
 	dbms_output.put_line('number of items : '||ans );
 end;
 /
