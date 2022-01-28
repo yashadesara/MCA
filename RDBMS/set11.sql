@@ -11,15 +11,15 @@ create table TRAIN_MASTER
 );
 
 
-insert into TRAIN_MASTER values('9012DN','RAJDHANI',
-(TO_DATE('1-NOV-2021 12.35.10 PM','DD-MM-YYYY HH.MI.SS PM')),
-(TO_DATE('1-NOV-2021 2.35.10 PM','DD-MM-YYYY HH.MI.SS PM')),
-2,'DELHI','AGRA');
+    insert into TRAIN_MASTER values('9012DN','RAJDHANI',
+    (TO_DATE('1-NOV-2021 12.35.10 PM','DD-MM-YYYY HH.MI.SS PM')),
+    (TO_DATE('1-NOV-2021 2.35.10 PM','DD-MM-YYYY HH.MI.SS PM')),
+    2,'DELHI','AGRA');
 
-insert into TRAIN_MASTER values('3214UP','MALDHANI',
-(TO_DATE('2-NOV-2021 2.35.10 AM','DD-MM-YYYY HH.MI.SS PM')),
-(TO_DATE('2-NOV-2021 4.35.10 AM','DD-MM-YYYY HH.MI.SS PM')),
-2,'JAMMU','KASHMIR');
+    insert into TRAIN_MASTER values('3214UP','MALDHANI',
+    (TO_DATE('2-NOV-2021 2.35.10 AM','DD-MM-YYYY HH.MI.SS PM')),
+    (TO_DATE('2-NOV-2021 4.35.10 AM','DD-MM-YYYY HH.MI.SS PM')),
+    2,'JAMMU','KASHMIR');
 
 ---to select data from "TO_DATE('2-NOV-2021 2.35.10 AM','DD-MM-YYYY HH.MI.SS PM')".
 select 
@@ -65,7 +65,6 @@ create table TRAIN_DAY_MASTER
 
 insert into TRAIN_DAY_MASTER values('9012DN','MON');
 insert into TRAIN_DAY_MASTER values('9012DN','TUE');
-
 insert into TRAIN_DAY_MASTER values('3214UP','WED');
 insert into TRAIN_DAY_MASTER values('3214UP','TUE');
 
@@ -74,14 +73,14 @@ select * from TRAIN_MASTER;
 select * from TRAIN_DAY_MASTER;
 
 ---1 Give all the train nanes starting from “Bombay” and going to “Ahmedabad” on Tuesday and Wednesday.
-select tm.TRAIN_NAME
-from 
-TRAIN_MASTER tm, TRAIN_DAY_MASTER tdm
-where 
-tm.TRAIN_NUMBER=tdm.TRAIN_NUMBER and
-(tm.SOURCE_STATION='JAMMU' and tm.END_STATION='KASHMIR') and 
-tdm.TRAIN_NUMBER in(select TRAIN_NUMBER from TRAIN_DAY_MASTER where DAY='WED' and TRAIN_NUMBER in
-(select TRAIN_NUMBER from TRAIN_DAY_MASTER where DAY='TUE'));
+-- select tm.TRAIN_NAME
+-- from 
+-- TRAIN_MASTER tm, TRAIN_DAY_MASTER tdm
+-- where 
+-- tm.TRAIN_NUMBER=tdm.TRAIN_NUMBER and
+-- (tm.SOURCE_STATION='JAMMU' and tm.END_STATION='KASHMIR') and 
+-- tdm.TRAIN_NUMBER in(select TRAIN_NUMBER from TRAIN_DAY_MASTER where DAY='WED' and TRAIN_NUMBER in
+-- (select TRAIN_NUMBER from TRAIN_DAY_MASTER where DAY='TUE'));
 ---or
 select TRAIN_NAME from TRAIN_MASTER where 
 TRAIN_NUMBER in(select TRAIN_NUMBER from TRAIN_DAY_MASTER where DAY='WED' and TRAIN_NUMBER in
@@ -112,21 +111,20 @@ tdm.DAY='TUE';
 
 
 ---5 List train names which have no sleeper class.
-select tm.TRAIN_NAME
+select distinct tm.TRAIN_NAME
 from TRAIN_MASTER tm, PASSENGER_DETAILS pd 
 where tm.TRAIN_NUMBER=pd.TRAIN_NUMBER and
 CLASS NOT in('sleeper class');
 
 
 ---6 List train number which run on Monday during 8:00: am to 1:00pm.
-select tm.TRAIN_NUMBER 
+select distinct tm.TRAIN_NUMBER 
 from 
 TRAIN_MASTER tm, TRAIN_DAY_MASTER tdm
 where (to_char(ARRIVAL_TIME,'HH')>=12 or
 to_char(DEPARTURE_TIME,'HH')<=04) and 
 tdm.DAY='MON' and
 tm.TRAIN_NUMBER=tdm.TRAIN_NUMBER;
-
 
 
 -- 7. Write a procedure which will print all train details going from Baroda to Banglore.

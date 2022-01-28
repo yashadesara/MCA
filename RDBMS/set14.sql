@@ -10,8 +10,8 @@ create table EMP
 );
 
 insert into EMP values(1,'ABC','DUBAI',30000,'10-AUG-2000','12-AUG-2021',1);
-insert into EMP values(1,'PQR','US',40000,'12-AUG-2000','14-AUG-2021',2);
-insert into EMP values(1,'XYZ','UK',50000,'14-AUG-2000','16-AUG-2021',3);
+insert into EMP values(2,'PQR','US',40000,'12-AUG-2000','14-AUG-2021',2);
+insert into EMP values(3,'XYZ','UK',50000,'14-AUG-2000','16-AUG-2021',3);
 
 
 create table JOB
@@ -24,18 +24,19 @@ create table JOB
 insert into JOB values(1,'DEVELOPER','Running');
 insert into JOB values(2,'CODER','Running');
 insert into JOB values(3,'TESER','Running');
+insert into JOB values(4,'NEWTESER','incomplete');
 
-create table ITEM
+create table IITEM
 (
     itemno int PRIMARY KEY, 
     name VARCHAR2(10), 
     color VARCHAR2(10), 
     weight number(5)
-)
+);
 
-insert into ITEM values(1,'MOUSE','BLACK',50);
-insert into ITEM values(2,'KEYBOARD','BLACK',150);
-insert into ITEM values(3,'WIRE','BLACK',20);
+insert into IITEM values(1,'MOUSE','BLACK',50);
+insert into IITEM values(2,'KEYBOARD','BLACK',150);
+insert into IITEM values(3,'WIRE','BLACK',20);
 
 create table WORKER
 (
@@ -55,13 +56,13 @@ insert into WORKER values(3,'VIRANI','30','DEVELOPING',3);
 --EMP (empno, empnm, empadd, salary, date_birth, joindt, deptno)
 
 Declare
-	cursor c1 is  select empno,ename from emp ;
+	cursor c1 is  select empno,empnm from emp;
 begin	
 	dbms_output.put_line(rpad('-',50,'-'));
 	dbms_output.put_line(upper(rpad('emp no',20)|| rpad('emp name',20)));	
 	dbms_output.put_line(rpad('-',50,'-'));
 	for r in c1 loop
-		dbms_output.put_line(upper(rpad(r.empno,20)|| rpad(r.ename,20)));
+		dbms_output.put_line(upper(rpad(r.empno,20)|| rpad(r.empnm,20)));
 	end loop;
 	dbms_output.put_line(rpad('-',50,'-'));
 end;
@@ -74,9 +75,8 @@ return number
 is
 	ic_job number(4);	 
 begin	
-	select count(*) into ic_job from job where job_status='incomplete';
+	select count(*) into ic_job from job where status='incomplete';
 	return(ic_job);
-	
 end;
 /
 
@@ -97,9 +97,8 @@ return number
 is
 	icount number(4);	 
 begin	
-	select count(*) into icount from item14 where itemcolor=c and itemweight between l and h;
+	select count(*) into icount from IITEM where color=c and weight between l and h;
 	return(icount);
-	
 end;
 /
 
@@ -116,8 +115,8 @@ end;
  
 Declare
 	cursor c1 is 
-	select WORKERID, WORKERNAME, WAGE_PER_HOUR, SPECIALIZED_IN,MANAGER_ID 
-	from worker  where SPECIALIZED_IN='php' order by wage_per_hour desc;
+	select WORKERID, name, WAGE_PER_HOUR, SPECIALIZED_IN, MANAGER_ID 
+	from worker  where SPECIALIZED_IN='CODING' order by wage_per_hour desc;
 	n number;
 begin		
 	n:=1;
@@ -132,7 +131,7 @@ begin
 			EXIT ;
 		end if;	
 		dbms_output.put_line(upper(
-			rpad(r.WORKERID,10)|| rpad(r.WORKERNAME,10)||
+			rpad(r.WORKERID,10)|| rpad(r.name,10)||
 			rpad(r.WAGE_PER_HOUR,10)|| rpad(r.SPECIALIZED_IN,10)|| rpad(r.MANAGER_ID,10)
 		));
 		n:=n+1;

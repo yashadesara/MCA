@@ -3,8 +3,7 @@ create table DISTRIBUTOR
     dno int PRIMARY KEY,
     dname VARCHAR2(10),
     daddress VARCHAR2(10),
-    dphone number(10),
-    CONTACT_PERSON VARCHAR2(20) NOT NULL ---altered in 1st query.
+    dphone number(10)
 );
 
 insert into DISTRIBUTOR values(1,'SHAH','DUBAI',1293998880,'mr.bhuro');
@@ -47,6 +46,11 @@ insert into DIST_ITEM values(3,3,15);
 ---1 Add a column CONTACT_PERSON to the DISTRIBUTOR table with the not null constraint.
 alter table DISTRIBUTOR add CONTACT_PERSON VARCHAR2(20) NOT NULL;
 
+-- 2. Create a view LONDON_DIST on DIST_ITEM which contains only those records
+-- where distributors are from London. Make sure that this condition is checked for every
+-- DML against this view
+create or replace view LONDON_DIST as
+select dname from DISTRIBUTOR where daddress='DUBAI';
 
 ---3 Display the details of all those items that have never been supplied.
 select itemname from ITEMM where itemno not in(select itemno from DIST_ITEM);
@@ -84,10 +88,20 @@ select dname from DISTRIBUTOR where dname like '____OH%';
 select count(dname) from DISTRIBUTOR where dno in(select dno from DIST_ITEM where itemno=1);
 
 
+-- 11. Create a view on the tables in such a way that the view contains the distributor name,
+-- item name and the quantity supplied.
+create or replace view all_tables as 
+select distinct d.dname, i.itemname, di.qty
+from DISTRIBUTOR d, ITEMM i, DIST_ITEM di
+where
+d.dno=di.dno and
+i.itemno=di.itemno;
+
+
 -- 12 List the name, address and phone number of distributors who have the same three
 -- digits in their number as ‘Mr. Talkative’.
-select dphone from DISTRIBUTOR 
-where dphone like (select dphone from DISTRIBUTOR where dname='SHAH');
+
+
 
 -- 13. List all distributor names who supply either item I1 or I7 or the 
 -- quantity supplied is more than 100.

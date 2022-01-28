@@ -45,7 +45,6 @@ select cid from ORDERR group by cid having avg(oTotalAmount) between 5000 and 10
 
 -- 4. Create a trigger that executes whenever country is updated in CUSTOMER table
 set serveroutput on
-
 create or replace trigger tricountry
     before insert or update or delete on CUSTOMERR
     for each row
@@ -67,4 +66,23 @@ begin
 end;
 /
 
-
+-- 6. Create a procedure to display month names of dates of ORDER table. The month
+-- names should be unique.
+create or replace procedure p1
+is
+cursor c1
+is
+    select distinct to_char(oDate,'MON') as mon from ORDERR;
+begin
+dbms_output.put_line(Rpad('-',10,'-'));
+dbms_output.put_line(
+    Rpad('MONTH',15)
+);
+dbms_output.put_line(Rpad('-',10,'-'));
+for r in c1 loop
+    dbms_output.put_line(
+        Rpad(r.mon,15)
+    );
+    end loop;
+end;
+/
