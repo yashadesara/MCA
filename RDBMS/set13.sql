@@ -83,6 +83,7 @@ select avg(weight) from ITEMM group by colour having count(*)>2;
 -- after the fourth character.
 select dname from DISTRIBUTOR where dname like '____OH%';
 
+
 -- 10. Count the number of distributors who have a phone connection and are supplying item
 -- number ‘I100’.
 select count(dname) from DISTRIBUTOR where dno in(select dno from DIST_ITEM where itemno=1);
@@ -100,11 +101,14 @@ i.itemno=di.itemno;
 
 -- 12 List the name, address and phone number of distributors who have the same three
 -- digits in their number as ‘Mr. Talkative’.
-
+select dname,dphone,daddress from distributor where substr(dphone,1,3) in
+(select substr(dphone,1,3) from distributor where dname='ABCDOHOB') and dname!='ABCDOHOB'
 
 
 -- 13. List all distributor names who supply either item I1 or I7 or the 
 -- quantity supplied is more than 100.
+select d.dno , d.dname from distributor d where dno in
+(select dno from dist_item where (itemno=2 or itemno=3) and qty>=10);
 
 
 -- 14. Display the data of the top three heaviest ITEMS.
