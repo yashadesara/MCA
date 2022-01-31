@@ -41,7 +41,7 @@ begin
 		));
 	dbms_output.put_line(rpad('-',50,'-'));
 	for r in c1 loop
-		if r.nYears>5 then
+		if r.nYears>0 then
 			dbms_output.put_line(upper(
 				rpad(r.empno,10)|| rpad(r.empnm,10)||
 				rpad(r.date_birth,10)|| rpad(r.salary,10)|| rpad(r.nYears,10)
