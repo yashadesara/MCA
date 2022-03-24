@@ -1,0 +1,14 @@
+Install Required Packages:-
+pip install pandas
+pip install numpy
+pip install selenium
+pip install webdriver-manager
+
+
+Important web URL:-
+https://www.selenium.dev/documentation/webdriver/elements/finders/
+https://www.softwaretestinghelp.com/
+https://www.javatpoint.com/selenium-python
+https://www.tutorialspoint.com/selenium/selenium_webdriver.htm
+
+
