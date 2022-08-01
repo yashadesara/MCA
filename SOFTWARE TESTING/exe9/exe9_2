@@ -1,0 +1,24 @@
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+import time
+
+driver=webdriver.Chrome(service=Service("chromedriver.exe"))
+driver.maximize_window()
+driver.get("https://www.geeksforgeeks.org/")
+
+# print(driver.get_window_size())
+# driver.set_window_position(720,480,windowHandle='current')
+# print(driver.current_window_handle)
+
+driver.execute_script("window.open('about:blank','secondtab');")
+driver.switch_to.window("secondtab")
+driver.get('https://code.visualstudio.com/')
+time.sleep(5)
+driver.close()
+
+
+
+
