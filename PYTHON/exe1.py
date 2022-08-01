@@ -1,5 +1,4 @@
 # 1 Write a Python Program to Convert Celsius to Fahrenheit and vice –a-versa.
-
 cel = float(input("enter cel: "))
 
 f = (cel*1.8)+32
